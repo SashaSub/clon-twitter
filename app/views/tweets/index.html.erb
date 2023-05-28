@@ -1,14 +1,29 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Tweets</h1>
-
-<div id="tweets">
-  <% @tweets.each do |tweet| %>
-    <%= render tweet %>
-    <p>
-      <%= link_to "Show this tweet", tweet %>
-    </p>
+<h1 class="ms-4 mt-5 text-primary">Tweets</h1>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+<div class="my-3">
+  <%= form_with url: tweets_path, method: :get do |form| %>
+    <%= form.text_field :query_text, placeholder: ('Query text'), value: params[:query_text] %>
   <% end %>
 </div>
+  <%= link_to "New tweet", new_tweet_path, class: "btn btn-outline-primary me-4" %>
+  <%#= button_to "New tweet", new_tweet_path, :method => :get %>
+</div>
 
-<%= link_to "New tweet", new_tweet_path %>
+<div id="tweets" class="container d-flex justify-content-around align-content-center flex-wrap gap-3 my-3">
+    <% @tweets.each do |tweet| %>
+    <div class="card badge text-bg-secondary fs-6" style="width: 18rem;">
+        <div class="card-body">
+      <%= render tweet %>
+        <p>
+          <%= link_to "Show this tweet", tweet, class: "text-primary-emphasis" %>
+        </p>
+        </div>
+            </div>
+    <% end %>   
+</div>
+<div class="container d-flex justify-content-around align-content-center flex-wrap my-5">
+  <%= raw pagy_bootstrap_nav(@pagy)%>
+</div>
+
