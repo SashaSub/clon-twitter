@@ -61,3 +61,9 @@ set :keep_releases, 5
 #   end
 # end
 # after 'deploy:migrate', 'deploy:seed'
+
+# set this to false after deploying for the first time 
+set :initial, true
+
+# run only if app is being deployed for the very first time, should update "set :initial, true" above to run this
+before 'deploy:migrate', 'database:create' if fetch(:initial)
